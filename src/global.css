@@ -1,0 +1,49 @@
+/**
+ * WHAT IS THIS FILE?
+ *
+ * Globally applied styles. No matter which components are in the page or matching route,
+ * the styles in here will be applied to the Document, without any sort of CSS scoping.
+ *
+ */
+
+ @tailwind base;
+ @tailwind components;
+ @tailwind utilities;
+
+
+:root {
+  --qwik-dark-blue: #006ce9;
+  --qwik-light-blue: #18b6f6;
+  --qwik-light-purple: #ac7ff4;
+  --qwik-dark-purple: #713fc2;
+}
+
+body {
+  /* background-color: #e1e1e1; */
+  /* font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif; */
+  /* font-family: 'Inter', sans-serif; */
+  font-family: 'Poppins', sans-serif;
+  font-weight: 200;
+  padding: 60px 0px;
+  background-color: rgb(35, 35, 35);
+  color: white
+}
+
+::selection {
+  background: rgb(8, 2, 61);
+  color: white;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 100;
+}
+
+h1 b,
+h2 b,
+h3 b {
+  font-weight: 300;
+}
+
+
