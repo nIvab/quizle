@@ -24,10 +24,12 @@ body {
   /* font-family: 'Inter', sans-serif; */
   font-family: 'Poppins', sans-serif;
   font-weight: 200;
-  padding: 60px 0px;
-  background-color: rgb(35, 35, 35);
-  color: white
+  /* padding: 60px 0px; */
+  background-color: rgb(23 23 23);
+  color: white;
+
 }
+
 
 ::selection {
   background: rgb(8, 2, 61);
