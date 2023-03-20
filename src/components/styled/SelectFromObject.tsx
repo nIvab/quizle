@@ -22,9 +22,8 @@ export const SelectFromObject = component$((props: SelectFromObjectProps) => {
           let key: ObjectKey = k as ObjectKey;
           console.log(props.object[key]);
           let value = props.object[key];
-
           return (
-            <option value={`${value}`} class="">
+            <option value={`${value}`} class="" key={`${value}`}>
               {key}
             </option>
           );
