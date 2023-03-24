@@ -1,33 +1,30 @@
-import cron from "node-cron";
+// import cron from "node-cron";
 import fs from "fs/promises";
 import path from "path";
-import { getNewsArticlesFromTimePeriod, NewsData } from "./newsHandler";
-import { getGPTChatResponse, GeneratedQuizQuestion } from "./gptHandler";
+import { getNewsArticlesFromTimePeriod } from "./newsHandler";
+import { getGPTChatResponse } from "./gptHandler";
+import { GeneratedQuizQuestion, QuizQuestion } from "../../types/QuizQuestion";
+import { writeQuizToMongo } from "./databaseHandler";
+import { NewsData } from "../../types/NewsData";
 
-export interface QuizQuestion extends GeneratedQuizQuestion {
-  source: string;
-  image: string;
-}
-//TODO copy old files to generartedQuiz/old + file handling + cron job
 export const setupQuiz = async (timePeriod: string): Promise<void> => {
   /**
-   * will generate a quiz, filter out all null values save the quiz to the ~/server/quiz/generatedQuiz dir
-   * and move the old quiz to a new directory
+   * will generate a quiz, filter out all null values save the quiz to the mongoDB database
    */
-  const quizQuestionsWithNulls: QuizQuestion[] | null = await generateQuiz(
-    timePeriod
-  );
-  //quickly filter out the nulls
-  const quizQuestions: QuizQuestion[] = (quizQuestionsWithNulls ?? []).filter(
-    (question: QuizQuestion) => question !== null && question !== undefined
-  );
-  const fileName = `quiz_${new Date().toISOString().slice(0, 10)}.json`;
-  const generatedDir = path.join(__dirname, "generatedQuiz");
-  const oldDir = path.join(generatedDir, "old");
-  await fs.writeFile(fileName, JSON.stringify(quizQuestions));
+  try {
+    const quizQuestionsWithNulls: QuizQuestion[] | null =
+      await generateQuizQuestions(timePeriod);
+    //quickly filter out the nulls
+    const quizQuestions: QuizQuestion[] = (quizQuestionsWithNulls ?? []).filter(
+      (question: QuizQuestion) => question !== null && question !== undefined
+    );
+    await writeQuizToMongo(quizQuestions);
+  } catch (error) {
+    console.error(error);
+  }
 };
 
-export const generateQuiz = async (
+export const generateQuizQuestions = async (
   timePeriod: string
 ): Promise<QuizQuestion[] | null> => {
   try {
@@ -35,9 +32,9 @@ export const generateQuiz = async (
       timePeriod
     );
     if (!newsArticles) {
+      console.error("no news articles to use");
       return null;
     }
-
     const quizQuestions: (QuizQuestion | null)[] = await Promise.all(
       newsArticles.map(async (article) => {
         const gptResponse: GeneratedQuizQuestion | null =
@@ -48,6 +45,7 @@ export const generateQuiz = async (
             source: article.url,
             image: article.image,
           };
+          console.log("got quiz questions");
           return quizQuestion;
         } else {
           return null;
