@@ -1,37 +1,16 @@
-import { NewsData } from "../../types/NewsData";
 import axios from "axios";
+import { getDateFromTimePeriod } from "./timeValues";
+import { NewsData } from "../../types/NewsData";
 
 export const getNewsArticlesFromTimePeriod = async (
   timePeriod: string = ""
 ): Promise<NewsData[] | null> => {
-  const week: number = 7 * 24 * 60 * 60 * 1000;
-  let response: NewsAPIResponse | null = null;
-  switch (timePeriod) {
-    case "day":
-      const day: number = week / 7;
-      const dateDayAgo: string = new Date(Date.now() - day).toISOString();
-      response = await fetchData(dateDayAgo);
-      break;
-    case "week":
-      const dateWeekAgo: string = new Date(Date.now() - week).toISOString();
-      response = await fetchData(dateWeekAgo);
-      break;
-    case "month":
-      const month: number = week * 4;
-      const dateMonthAgo: string = new Date(Date.now() - month).toISOString();
-      response = await fetchData(dateMonthAgo);
-      break;
-    case "year":
-      const year: number = week * 52;
-      const dateYearAgo: string = new Date(Date.now() - year).toISOString();
-      response = await fetchData(dateYearAgo);
-      break;
-    default:
-      console.error(
-        `err: default time period, time period passed to getNewsArticlesFromTimePeriod: ${timePeriod}`
-      );
-      return null;
+  const acceptableInput: string[] = ["day", "week", "month", "year"];
+  if (acceptableInput.includes(timePeriod) === false) {
+    return null;
   }
+  const isoDate: string = getDateFromTimePeriod(timePeriod)!.toISOString();
+  let response: NewsAPIResponse | null = await fetchData(isoDate);
   if (response && response["news"]) {
     const data = response["news"] as NewsData[];
     return data;

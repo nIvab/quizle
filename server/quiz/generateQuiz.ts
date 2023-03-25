@@ -4,7 +4,7 @@ import path from "path";
 import { getNewsArticlesFromTimePeriod } from "./newsHandler";
 import { getGPTChatResponse } from "./gptHandler";
 import { GeneratedQuizQuestion, QuizQuestion } from "../../types/QuizQuestion";
-import { writeQuizToMongo } from "./databaseHandler";
+import { writeQuizToMongo } from "../database/databaseHandler";
 import { NewsData } from "../../types/NewsData";
 
 export const setupQuiz = async (timePeriod: string): Promise<void> => {
@@ -18,7 +18,7 @@ export const setupQuiz = async (timePeriod: string): Promise<void> => {
     const quizQuestions: QuizQuestion[] = (quizQuestionsWithNulls ?? []).filter(
       (question: QuizQuestion) => question !== null && question !== undefined
     );
-    await writeQuizToMongo(quizQuestions);
+    await writeQuizToMongo(quizQuestions, timePeriod);
   } catch (error) {
     console.error(error);
   }
