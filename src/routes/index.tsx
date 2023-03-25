@@ -7,7 +7,7 @@ import { RadioButtonsFromArray } from "~/components/styled/RadioButtonsFromArray
 export default component$(() => {
   const nav = useNavigate();
 
-  const timeSelections: string[] = ["Day", "Week", "Month", "Year"];
+  const timeSelections: string[] = ["Week", "Month"];
   const activeTimeValue: Signal<string> = useSignal<string>("Week");
 
   const handleActiveTimeValue = $((value: string) => {

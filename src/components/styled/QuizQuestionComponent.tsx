@@ -66,7 +66,9 @@ const QuizButton = component$((props: QuizButtonProps) => {
       onClick$={handleAnswer}
       class="flex flex-row bg-gradient-to-r from-cyan-500 to-blue-500 hover:-translate-y-1 hover:drop-shadow-xl hover:scale-110 hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500 transition ease-in-out delay-80 p-5 rounded-lg w-auto	 font-bold overflow-hidden"
     >
-      <div class="pr-5 pl-30 py-30 text-xl">{props.index}</div>
+      <div class="pr-5 pl-30 py-30 text-xl">
+        {String.fromCharCode(97 + props.index).toLocaleUpperCase()}
+      </div>
       <div class="px-2"></div>
       {props.text}
     </div>
