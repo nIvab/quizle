@@ -42,8 +42,10 @@ const RadioButton: Component<RadioButtonProps> = component$(
     let style: string =
       "p-3 px-5 rounded-2xl font-bold text-stone-300 transition ease-in-out delay-80 hover:-translate-y-1 hover:scale-110";
     props.isActive
-      ? (style += " bg-blue-700 hover:bg-indigo-700")
-      : (style += " bg-rose-600 hover:bg-pink-700");
+      ? (style +=
+          " bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-r hover:from-indigo-500 hover:to-blue-500")
+      : (style +=
+          " bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-r hover:from-pink-500 hover:to-rose-500");
     const onClickReWrapped = $(() => {
       // need to do this as qwik does not allow HTML to call QRL's defined outside of the scope of the component its defined in
       props.onClick(props.text);

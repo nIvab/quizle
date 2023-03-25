@@ -11,8 +11,8 @@ export const getNewsArticlesFromTimePeriod = async (
   }
   const isoDate: string = getDateFromTimePeriod(timePeriod)!.toISOString();
   let response: NewsAPIResponse | null = await fetchData(isoDate);
-  if (response && response["news"]) {
-    const data = response["news"] as NewsData[];
+  if (response && response["articles"]) {
+    const data = response["articles"] as NewsData[];
     return data;
   } else {
     console.error("return null here");
@@ -21,20 +21,35 @@ export const getNewsArticlesFromTimePeriod = async (
 };
 
 interface NewsAPIResponse {
-  news: NewsData[];
+  articles: NewsData[];
 }
 
 const fetchData = async (time: string): Promise<NewsAPIResponse | null> => {
   const dateNowISO = new Date(Date.now()).toISOString(); // ISO 8601
+  // const options = {
+  //   method: "GET",
+  //   url: "https://api.worldnewsapi.com/search-news",
+  //   params: {
+  //     "source-countries": "au",
+  //     number: 10,
+  //     "api-key": import.meta.env.VITE_NEWS_API_KEY,
+  //     "earliest-publish-date": time,
+  //     "latest-publish-date": dateNowISO,
+  //   },
+  // };
   const options = {
     method: "GET",
-    url: "https://api.worldnewsapi.com/search-news",
+    url: "https://newsapi.org/v2/everything",
     params: {
       "source-countries": "au",
       number: 10,
-      "api-key": import.meta.env.VITE_NEWS_API_KEY,
-      "earliest-publish-date": time,
-      "latest-publish-date": dateNowISO,
+      apiKey: import.meta.env.VITE_NEWS_API_KEY,
+      from: time,
+      to: dateNowISO,
+      sortBy: "popularity",
+      pageSize: 10,
+      // country: "au",
+      domains: "abc.net.au,smh.com.au,theaustralian.com.au,9news.com.au/",
     },
   };
   const response = await axios.request(options);

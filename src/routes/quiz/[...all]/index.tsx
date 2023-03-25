@@ -34,7 +34,7 @@ export default component$(() => {
   );
   return (
     <div>
-      <div class="font-bold text-center text-5xl mb-10">
+      <div class="font-semibold text-center text-6xl mb-10">
         The quiz of The {timePeriod.value}
       </div>
       <div>

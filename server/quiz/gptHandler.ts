@@ -14,7 +14,7 @@ export const getGPTChatResponse = async (
   console.log("generating gpt response");
   const openai: OpenAIApi = new OpenAIApi(configuration);
   const prompt: string =
-    "generate a multiple choice question with 4 options from the given news article in json format using the following typescript type as a schema for the json, here is the type {question: string , choices: string[], answer: number}, only respond with the json object populated with the correct data and nothing else, here is the article: ";
+    "generate a multiple choice question with 4 options from the given news article in json format using the following typescript type as a schema for the json, here is the type {question: string , choices: string[], answer: number}, only respond with the json object populated with the correct data and nothing else, also ensure that the question generated is broad enough so that the reader may gain context about the news article from the question itself, here is the article: ";
   const response = await openai.createChatCompletion({
     model: "gpt-3.5-turbo",
     messages: [{ role: "user", content: prompt + article }],

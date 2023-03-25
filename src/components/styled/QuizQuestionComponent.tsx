@@ -25,7 +25,7 @@ export const QuizQuestionComponent = component$((props: QuizComponentProps) => {
   });
   return (
     <div>
-      <h2 class="font-semibold text-xl pb-4">
+      <h2 class="font-semibold text-3xl pb-4">
         Question {props.index + 1}: {questionObj.question}
       </h2>
       <img class="rounded-lg" src={props.question.image}></img>
@@ -64,7 +64,7 @@ const QuizButton = component$((props: QuizButtonProps) => {
   return (
     <div
       onClick$={handleAnswer}
-      class="flex flex-row bg-gradient-to-r from-cyan-500 to-blue-500 hover:-translate-y-1 hover:drop-shadow-xl hover:scale-110 hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500 transition ease-in-out delay-80 p-5 rounded-lg w-max font-bold overflow-hidden"
+      class="flex flex-row bg-gradient-to-r from-cyan-500 to-blue-500 hover:-translate-y-1 hover:drop-shadow-xl hover:scale-110 hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500 transition ease-in-out delay-80 p-5 rounded-lg w-auto	 font-bold overflow-hidden"
     >
       <div class="pr-5 pl-30 py-30 text-xl">{props.index}</div>
       <div class="px-2"></div>
