@@ -1,63 +1,46 @@
-import { data } from "autoprefixer";
-
-export type NewsData = {
-  id: number;
-  title: string;
-  text: string;
-  summary: string;
-  url: string;
-  image: string;
-  author: string;
-  language: string;
-  source_country: string;
-  sentiment: number;
-};
+import axios from "axios";
+import { getDateFromTimePeriod } from "./timeValues";
+import { NewsData } from "../../types/NewsData";
 
 export const getNewsArticlesFromTimePeriod = async (
   timePeriod: string = ""
 ): Promise<NewsData[] | null> => {
-  const week: number = 7 * 24 * 60 * 60 * 1000;
-  let response: JSON | null = null;
-  switch (timePeriod) {
-    case "day":
-      const day: number = week / 7;
-      const dateDayAgo: string = new Date(Date.now() - day).toISOString();
-      response = await fetchData(dateDayAgo);
-      break;
-    case "week":
-      const dateWeekAgo: string = new Date(Date.now() - week).toISOString();
-      response = await fetchData(dateWeekAgo);
-      break;
-    case "month":
-      const month: number = week * 4;
-      const dateMonthAgo: string = new Date(Date.now() - month).toISOString();
-      response = await fetchData(dateMonthAgo);
-      break;
-    case "year":
-      const year: number = week * 52;
-      const dateYearAgo: string = new Date(Date.now() - year).toISOString();
-      response = await fetchData(dateYearAgo);
-      break;
-    default:
-      throw console.error();
-      return null;
+  const acceptableInput: string[] = ["day", "week", "month", "year"];
+  if (acceptableInput.includes(timePeriod) === false) {
+    return null;
   }
-  if (response !== null) {
+  const isoDate: string = getDateFromTimePeriod(timePeriod)!.toISOString();
+  let response: NewsAPIResponse | null = await fetchData(isoDate);
+  if (response && response["news"]) {
     const data = response["news"] as NewsData[];
     return data;
   } else {
+    console.error("return null here");
     return null;
   }
 };
 
-const fetchData = async (time: string): Promise<JSON | null> => {
+interface NewsAPIResponse {
+  news: NewsData[];
+}
+
+const fetchData = async (time: string): Promise<NewsAPIResponse | null> => {
   const dateNowISO = new Date(Date.now()).toISOString(); // ISO 8601
-  const endpoint: string = `https://api.worldnewsapi.com/search-news?source-countries=au?number=10?earliest-publish-date=${time}?latest-publish-date=${dateNowISO}`;
-  const response: Response = await fetch(endpoint);
-  const { data, errors } = await response.json();
-  if (errors) {
-    console.error(errors);
+  const options = {
+    method: "GET",
+    url: "https://api.worldnewsapi.com/search-news",
+    params: {
+      "source-countries": "au",
+      number: 10,
+      "api-key": import.meta.env.VITE_NEWS_API_KEY,
+      "earliest-publish-date": time,
+      "latest-publish-date": dateNowISO,
+    },
+  };
+  const response = await axios.request(options);
+  if (response === undefined) {
+    console.error("fetchData, news was undefined");
     return null;
   }
-  return data;
+  return response.data;
 };

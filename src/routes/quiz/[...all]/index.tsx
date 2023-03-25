@@ -1,13 +1,13 @@
 import { $, component$, useSignal } from "@builder.io/qwik";
 import { routeLoader$, useLocation } from "@builder.io/qwik-city";
-// export const quizProps = routeLoader$((reqEvent) => {
-//   console.log(reqEvent);
+import { setupQuiz } from "../../../../server/quiz/generateQuiz";
+import { generateKey } from "crypto";
+import Button from "~/components/styled/Button";
+
+// export const genQuiz = routeLoader$((reqEvent) => {
 // });
 
 export default component$(() => {
-  const loc = useLocation();
-  console.log(loc);
-  //   quizProps();
   return (
     <div>
       <div>The Quiz</div>
