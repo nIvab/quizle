@@ -7,7 +7,6 @@ import mongoose, {
   Document,
 } from "mongodb";
 import { getDateFromTimePeriod } from "../quiz/timeValues";
-import { time } from "console";
 
 type MongoObjs = {
   client: MongoClient;
@@ -18,8 +17,10 @@ const getMongoObjs = async (): Promise<MongoObjs> => {
   /**
    * Connects to the mongodb server and gets the appropriate database
    */
+  console.log(import.meta.env.VITE_MONGO_DB);
   const uri: string = import.meta.env.VITE_MONGO_CONNECTION_URI as string;
-  const db_name: string = import.meta.env.VITE_MONGO_DB as string;
+  const db_name: string = "quizle-quizzes";
+  console.log(uri);
   const client: MongoClient = new MongoClient(uri);
   // Connect to the MongoDB database
   await client.connect();
@@ -38,6 +39,7 @@ export const writeQuizToMongo = async (
    * Takes an array of QuizQuestions, stores it in an object along with a timestamp then
    * writes the resulting object to the relevant MongoDB collection
    */
+  console.log(`Writing quiz to mongodb for timePeriod: ${timePeriod} `);
   if (quiz.length === 0) {
     console.log("Err writeQuizToMongo(): no questions for quiz");
     return;
@@ -46,23 +48,25 @@ export const writeQuizToMongo = async (
   const collection: Collection<Document> = db.collection(
     `quizzes-${timePeriod}`
   );
-  const now: string = new Date(Date.now()).toISOString();
+  const now = new Date(Date.now());
   try {
     const quizAsJson: Document = { timeCreated: now, quiz: quiz };
     console.log(`writing quiz to mongo`, quizAsJson);
     await collection.insertOne(quizAsJson);
+    console.log(`Wrote to quiz for timePeriod : ${timePeriod} `);
     client.close();
   } catch (error) {
     console.error(error);
   }
 };
 
-export const isDatabasePopulatedWithinTimeFrame = async (
+export const getDatabaseTimePeriodCount = async (
   timePeriod: string
-): Promise<boolean | null> => {
+): Promise<number | null> => {
   /**
    * Checks to see if the mongo db database has been updated within the expected time period
    */
+  console.log(`check called timeperiod: ${timePeriod} `);
   const acceptableInput: string[] = ["day", "week", "month", "year"];
   if (acceptableInput.includes(timePeriod) === false) {
     return null;
@@ -71,15 +75,16 @@ export const isDatabasePopulatedWithinTimeFrame = async (
   const collection: Collection<Document> = db.collection(
     `quizzes-${timePeriod}`
   );
-  const yesterday: Date | null = getDateFromTimePeriod(timePeriod);
-  const now = Date.now();
+  const fromTime: Date | null = getDateFromTimePeriod(timePeriod);
+  const now = new Date(Date.now());
   const query = {
     timeCreated: {
-      $gte: yesterday,
+      $gte: fromTime,
       $lte: now,
     },
   };
   const count = await collection.countDocuments(query);
   client.close();
-  return count > 0;
+  console.log(`count for time: ${timePeriod} with count: ${count}`);
+  return count;
 };
