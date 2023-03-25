@@ -7,11 +7,12 @@ import mongoose, {
   Document,
 } from "mongodb";
 import { getDateFromTimePeriod } from "../quiz/timeValues";
-
+import { time } from "console";
 type MongoObjs = {
   client: MongoClient;
   db: Db;
 };
+const db_name: string = "quizle-quizzes";
 
 const getMongoObjs = async (): Promise<MongoObjs> => {
   /**
@@ -19,7 +20,6 @@ const getMongoObjs = async (): Promise<MongoObjs> => {
    */
   console.log(import.meta.env.VITE_MONGO_DB);
   const uri: string = import.meta.env.VITE_MONGO_CONNECTION_URI as string;
-  const db_name: string = "quizle-quizzes";
   console.log(uri);
   const client: MongoClient = new MongoClient(uri);
   // Connect to the MongoDB database
@@ -87,4 +87,50 @@ export const getDatabaseTimePeriodCount = async (
   client.close();
   console.log(`count for time: ${timePeriod} with count: ${count}`);
   return count;
+};
+
+export const readLatestQuizFromDb = async (
+  timePeriod: string
+): Promise<QuizQuestion[] | null> => {
+  const { client, db } = await getMongoObjs();
+  try {
+    const collection: Collection = db.collection(`quizzes-${timePeriod}`);
+    const response = await collection.findOne();
+    if (response) {
+      const quiz = response.quiz;
+      client.close();
+      return quiz;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+  console.log(
+    `something went wrong reading the latest quiz - returning null  `
+  );
+  client.close();
+  return null;
+};
+
+export const readAllQuizzesFromDb = async (
+  timePeriod: string
+): Promise<QuizQuestion[] | null> => {
+  const { client, db } = await getMongoObjs();
+  try {
+    const collection: Collection = db.collection(`quizzes-${timePeriod}`);
+    const response = await collection.find().toArray();
+    if (response) {
+      const quizzes: QuizQuestion[] = response.map((res) => {
+        return res.quiz as QuizQuestion;
+      });
+      client.close();
+      return quizzes;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+  console.log(
+    `something went wrong reading all the quizzes - returning null  `
+  );
+  client.close();
+  return null;
 };
