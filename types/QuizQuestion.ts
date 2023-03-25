@@ -1,6 +1,6 @@
 export interface GeneratedQuizQuestion {
   question: string;
-  options: string[];
+  choices: string[];
   answerIndex: number;
 }
 

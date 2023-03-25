@@ -94,8 +94,10 @@ export const readLatestQuizFromDb = async (
 ): Promise<QuizQuestion[] | null> => {
   const { client, db } = await getMongoObjs();
   try {
+    console.log(`the collection we're tying to hit quizzes-${timePeriod}`);
     const collection: Collection = db.collection(`quizzes-${timePeriod}`);
     const response = await collection.findOne();
+    console.log(`the response ${response}`);
     if (response) {
       const quiz = response.quiz;
       client.close();
