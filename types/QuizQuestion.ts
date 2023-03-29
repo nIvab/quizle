@@ -1,7 +1,7 @@
 export interface GeneratedQuizQuestion {
   question: string;
   choices: string[];
-  answerIndex: number;
+  answer: number;
 }
 
 export interface QuizQuestion extends GeneratedQuizQuestion {

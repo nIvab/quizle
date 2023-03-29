@@ -38,7 +38,9 @@ export default component$(() => {
         <p class="mt-1">Use the options below to set the timescale desired.</p>
         <div>
           <div class="mt-5">
-            <h4 class="text-center font-semibold text-xl mb-3">Time Period</h4>
+            <h4 class="text-center font-semibold text-xl mb-3">
+              Time Period: {activeTimeValue.value}
+            </h4>
             <div class="flex justify-center">
               <RadioButtonsFromArray
                 arr={timeSelections}

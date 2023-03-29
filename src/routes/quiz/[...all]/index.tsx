@@ -1,13 +1,12 @@
 import {
   $,
   Resource,
-  Signal,
   component$,
   useResource$,
   useSignal,
 } from "@builder.io/qwik";
 import { routeLoader$, useLocation } from "@builder.io/qwik-city";
-import Button from "~/components/styled/Button";
+import Button from "~/components/styled/buttons/Button";
 import { readLatestQuizFromDb } from "../../../../server/database/databaseHandler";
 import { QuizQuestion } from "../../../../types/QuizQuestion";
 import { time } from "console";
@@ -35,7 +34,7 @@ export default component$(() => {
   return (
     <div>
       <div class="font-semibold text-center text-6xl mb-10">
-        The quiz of The {timePeriod.value}
+        {`The quiz of The ${timePeriod.value}`.toLocaleUpperCase()}
       </div>
       <div>
         <Resource
@@ -56,10 +55,6 @@ export default component$(() => {
             });
           }}
         ></Resource>
-        {/* {quiz.value.map((question) => {
-          console.log("aaaa");
-          return <QuizComponent question={question}></QuizComponent>;
-        })} */}
       </div>
     </div>
   );
