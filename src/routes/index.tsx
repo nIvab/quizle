@@ -1,8 +1,8 @@
 import { $, Signal, component$, useSignal } from "@builder.io/qwik";
 import { DocumentHead, useNavigate } from "@builder.io/qwik-city";
 
-import Button from "~/components/styled/Button";
-import { RadioButtonsFromArray } from "~/components/styled/RadioButtonsFromArray";
+import Button from "~/components/styled/buttons/Button";
+import { RadioButtonsFromArray } from "~/components/styled/buttons/RadioButtonsFromArray";
 
 export default component$(() => {
   const nav = useNavigate();

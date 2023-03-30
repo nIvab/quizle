@@ -8,20 +8,31 @@ interface AnswerComponentProps {
   isCorrect: boolean | null;
   userAnswer: number;
   correctAnswerNumber: number;
-  // summary: string // todo add support for this
+  summary: string;
 }
+
 export const AnswerComponent = component$((props: AnswerComponentProps) => {
   return (
     <div class="bg-zinc-700	w-auto max-w-3xl mx-auto p-3 rounded-md mt-4">
       {(() => {
         console.log("lala", props.correctAnswerNumber);
         if (props.isCorrect !== null && props.isCorrect) {
-          return <div class="font-bold"> Correct!</div>;
+          return (
+            <div>
+              {" "}
+              <span class="font-bold text-green-500 text-xl"> Correct! </span>
+              {props.summary}
+            </div>
+          );
         } else if (props.isCorrect !== null && !props.isCorrect) {
           return (
             <div>
-              <div class="font-bold"> False</div>
               <div>
+                {" "}
+                <span class="font-bold text-red-500 text-xl"> False: </span>
+                {props.summary}
+              </div>
+              <div class="font-bold">
                 The correct Answer was:{" "}
                 {mapIntToAlphabet(props.correctAnswerNumber)}
               </div>

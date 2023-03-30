@@ -7,6 +7,7 @@ import { useServerTimeLoader } from "~/routes/layout";
 type QuizComponentProps = {
   index: number;
   question: QuizQuestion;
+  incrementAnswer: QRL<(isRight: boolean) => void>;
 };
 
 const mapIntToAlphabet = (num: number) => {
@@ -24,6 +25,7 @@ export const QuizQuestionComponent = component$((props: QuizComponentProps) => {
     userAnswerSignal.value = answerIndex;
     hasAnsweredCorrectlySignal.value =
       userAnswerSignal.value == props.question.answer;
+    props.incrementAnswer(hasAnsweredCorrectlySignal.value);
   });
 
   return (
@@ -60,6 +62,7 @@ export const QuizQuestionComponent = component$((props: QuizComponentProps) => {
           isCorrect={hasAnsweredCorrectlySignal.value}
           userAnswer={userAnswerSignal.value}
           correctAnswerNumber={props.question.answer}
+          summary={props.question.summary}
         ></AnswerComponent>
       )}
     </div>
