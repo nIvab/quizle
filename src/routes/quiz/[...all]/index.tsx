@@ -1,9 +1,20 @@
-import { $, QRL, Resource, component$, useSignal } from "@builder.io/qwik";
-import { routeLoader$, useLocation } from "@builder.io/qwik-city";
+import {
+  $,
+  QRL,
+  Resource,
+  Signal,
+  component$,
+  useSignal,
+  useStore,
+  useTask$,
+} from "@builder.io/qwik";
+import { routeLoader$, useLocation, useNavigate } from "@builder.io/qwik-city";
 import { readLatestQuizFromDb } from "../../../../server/database/databaseHandler";
 import { QuizQuestion } from "../../../../types/QuizQuestion";
-import { QuizQuestionComponent } from "~/components/styled/QuizQuestionComponent";
+import { QuizQuestionComponent } from "~/components/styled/QuizQuestionComponent/QuizQuestionComponent";
 import { Modal } from "~/components/styled/Modal";
+import { getCustomGPTChatResponse } from "../../../../server/quiz/gptHandler";
+import Button from "~/components/styled/buttons/Button";
 
 interface QuizRoute {
   quiz: QuizQuestion[];
@@ -69,7 +80,6 @@ export default component$(() => {
           onPending={() => <div>...loading</div>}
           onRejected={() => <div>unable to load data</div>}
           onResolved={(quizQuestions) => {
-            console.log(`resolved:`, quizQuestions);
             return <></>;
           }}
         ></Resource>
@@ -88,23 +98,65 @@ interface ResultsComponentProps {
 }
 
 const ResultsComponent = component$((props: ResultsComponentProps) => {
-  console.log("results hit");
-
-  const cumResults: number = props.results.reduce((cumSum, nextNum) => {
-    cumSum + nextNum;
+  const resultsTotal: number = props.results.reduce((cumSum, nextNum) => {
+    return cumSum + nextNum;
   }, 0);
+
+  const resultsComment = useStore({
+    gptResultsComment: "",
+    giphyImage: "",
+  });
+
+  const nav = useNavigate();
+  const onClickNav = $(() => {
+    /**
+     * to take us back to the home menu
+     */
+    let url = `/`;
+    nav(url);
+  });
+
+  useTask$(async ({ track }) => {
+    track(() => resultsComment.gptResultsComment);
+
+    if (resultsTotal <= 5) {
+      resultsComment.giphyImage =
+        "https://media.tenor.com/l3GV2R9MbygAAAAC/breaking-bad-looking-at-phone.gif";
+    } else if (resultsTotal <= 7) {
+      resultsComment.giphyImage =
+        "https://media.tenor.com/vcD_AP7z80UAAAAd/happy-breaking-bad.gif";
+    } else if (resultsTotal <= 9) {
+      resultsComment.giphyImage =
+        "https://media.tenor.com/NBhaEjU1ZOcAAAAC/mr-burns-vingan%C3%A7a.gif";
+    } else if (resultsTotal == 10) {
+      resultsComment.giphyImage =
+        "https://media.tenor.com/g9_690TA-mMAAAAC/homer-smart.gif";
+    } else {
+      console.error("unhandled results - something went wrong");
+    }
+  });
+
   return (
     <Modal>
       <div class="p-10 flex flex-row space-x-4 ">
         <div class="bg-gradient-to-bl from-pink-300 via-purple-300 to-indigo-400 p-2 rounded-lg">
           <img
-            src="https://media3.giphy.com/media/LlLFGZjdihWyjveNzx/giphy.gif?cid=ecf05e472zxi0e7m6xzb8byqhj9hn09koisbrhhpim20f54s&rid=giphy.gif&ct=g"
-            alt=""
+            src={resultsComment.giphyImage}
+            alt="reaction to quiz result"
             class="rounded-lg max-w-sm"
           />
         </div>
-        <div class="bg-neutral-700 p-3 rounded-lg">
-          <h3 class="text-lg font-semibold">Your score: {cumResults}/10</h3>
+        <div class="flex flex-col items-center bg-neutral-700 p-3 rounded-lg max-w-lg">
+          <div class="my-auto">
+            <div class="text-4xl font-medium mx-auto text-center	">
+              Your score: {resultsTotal}/10
+            </div>
+            <div class="flex justify-center items-center mt-3">
+              <Button onClick={onClickNav} theme="default">
+                Home
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     </Modal>

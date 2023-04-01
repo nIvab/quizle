@@ -40,14 +40,12 @@ export const generateQuizQuestions = async (
         const gptResponse: GeneratedQuizQuestion | null =
           await getGPTChatResponse(article.content);
         if (gptResponse?.question) {
-          // console.log("\n \n just checking the article", article);
           const quizQuestion: QuizQuestion = {
             ...gptResponse,
             source: article.url,
             image: article.urlToImage,
             summary: article.description,
           };
-          console.log("got quiz questions");
           return quizQuestion;
         } else {
           return null;

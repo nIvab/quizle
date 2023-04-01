@@ -51,10 +51,9 @@ export default component$(() => {
           </div>
         </div>
         <div class="flex justify-center items-center mt-10">
-          <Button
-            text="Take me to the Quiz already"
-            onClick={onClickNav}
-          ></Button>
+          <Button onClick={onClickNav} theme="default">
+            Take me to the Quiz already
+          </Button>
         </div>
       </div>
     </div>

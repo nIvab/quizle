@@ -1,17 +1,18 @@
 import { $, QRL, component$, useSignal } from "@builder.io/qwik";
-import { QuizQuestion } from "../../../types/QuizQuestion";
-import { AnswerComponent } from "./AnswerComponent";
+import { QuizQuestion } from "../../../../types/QuizQuestion";
+import { AnswerComponent } from "../AnswerComponent/AnswerComponent";
 import { useServerTimeLoader } from "~/routes/layout";
-// todo: make some files for each of these new components
+import {
+  checkAndTrimString,
+  constructQuestionTextClipboard,
+  mapIntToAlphabet,
+} from "./utility";
+import Button from "../buttons/Button";
 
 type QuizComponentProps = {
   index: number;
   question: QuizQuestion;
   incrementAnswer: QRL<(isRight: boolean) => void>;
-};
-
-const mapIntToAlphabet = (num: number) => {
-  return String.fromCharCode(97 + num).toLocaleUpperCase();
 };
 
 export const QuizQuestionComponent = component$((props: QuizComponentProps) => {
@@ -28,6 +29,12 @@ export const QuizQuestionComponent = component$((props: QuizComponentProps) => {
     props.incrementAnswer(hasAnsweredCorrectlySignal.value);
   });
 
+  const copyQuestionToClipboard = $(() => {
+    navigator.clipboard.writeText(
+      constructQuestionTextClipboard(props.index, props.question)
+    );
+  });
+
   return (
     <div>
       <div class="font-bold text-3xl max-w-3xl mx-auto pb-4">
@@ -36,7 +43,7 @@ export const QuizQuestionComponent = component$((props: QuizComponentProps) => {
       </div>
       {/* todo: fix image sizing for smaller screens  */}
       <img
-        class="rounded-lg max-w-3xl mx-auto"
+        class="rounded-lg max-w-3xl mx-auto max-w-full h-auto"
         src={props.question.image ?? undefined}
       ></img>
       <ul>
@@ -57,6 +64,13 @@ export const QuizQuestionComponent = component$((props: QuizComponentProps) => {
             );
           })}
       </ul>
+      {userAnswerSignal.value < 0 && (
+        <div class="flex justify-center mx-auto mt-4">
+          <Button onClick={copyQuestionToClipboard} theme="warm">
+            Copy question to clipboard
+          </Button>
+        </div>
+      )}
       {userAnswerSignal.value >= 0 && (
         <AnswerComponent
           isCorrect={hasAnsweredCorrectlySignal.value}
@@ -101,18 +115,3 @@ const QuizButton = component$((props: QuizButtonProps) => {
     </div>
   );
 });
-
-// ----------------------------------------------------------------------------------------
-
-const checkAndTrimString = (s: string): string => {
-  /**
-   * Checks to see if chat gpt added uneeded question indices then trims them if they do exist
-   */
-  const pattern = /^[a-z]\)\s/i; // regular expression pattern to match the pattern a), b), c), etc.
-  if (pattern.test(s)) {
-    // if the string matches the pattern, trim it and return the result
-    return s.trim().slice(2);
-  }
-  // otherwise, return the original string
-  return s;
-};
