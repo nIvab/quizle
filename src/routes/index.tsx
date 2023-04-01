@@ -1,13 +1,13 @@
 import { $, Signal, component$, useSignal } from "@builder.io/qwik";
 import { DocumentHead, useNavigate } from "@builder.io/qwik-city";
 
-import Button from "~/components/styled/Button";
-import { RadioButtonsFromArray } from "~/components/styled/RadioButtonsFromArray";
+import Button from "~/components/styled/buttons/Button";
+import { RadioButtonsFromArray } from "~/components/styled/buttons/RadioButtonsFromArray";
 
 export default component$(() => {
   const nav = useNavigate();
 
-  const timeSelections: string[] = ["Day", "Week", "Month", "Year"];
+  const timeSelections: string[] = ["Week", "Month"];
   const activeTimeValue: Signal<string> = useSignal<string>("Week");
 
   const handleActiveTimeValue = $((value: string) => {
@@ -38,7 +38,9 @@ export default component$(() => {
         <p class="mt-1">Use the options below to set the timescale desired.</p>
         <div>
           <div class="mt-5">
-            <h4 class="text-center font-semibold text-xl mb-3">Time Period</h4>
+            <h4 class="text-center font-semibold text-xl mb-3">
+              Time Period: {activeTimeValue.value}
+            </h4>
             <div class="flex justify-center">
               <RadioButtonsFromArray
                 arr={timeSelections}
@@ -49,10 +51,9 @@ export default component$(() => {
           </div>
         </div>
         <div class="flex justify-center items-center mt-10">
-          <Button
-            text="Take me to the Quiz already"
-            onClick={onClickNav}
-          ></Button>
+          <Button onClick={onClickNav} theme="default">
+            Take me to the Quiz already
+          </Button>
         </div>
       </div>
     </div>

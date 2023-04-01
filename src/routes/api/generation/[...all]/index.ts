@@ -9,7 +9,6 @@ export const onRequest: RequestHandler = async (event) => {
   const key = import.meta.env.VITE_ENDPOINT_KEY as string; // very scuffed authentication but does what we need
   const params: URLSearchParams = event.query;
   if (params.get("apiKey") == key) {
-    console.log("generating quiz endpoint hit");
     runCheck();
     event.json(200, {
       status: "ok",

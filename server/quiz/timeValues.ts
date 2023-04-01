@@ -7,7 +7,7 @@ export const timeValues = {
   day: day,
   week: week,
   month: month,
-  year: year,
+  // year: year,
 };
 
 export const getDateFromTimePeriod = (timePeriod: string): Date | null => {
@@ -22,9 +22,9 @@ export const getDateFromTimePeriod = (timePeriod: string): Date | null => {
     case "month":
       date = new Date(Date.now() - timeValues.month);
       break;
-    case "year":
-      date = new Date(Date.now() - timeValues.year);
-      break;
+    // case "year":
+    //   date = new Date(Date.now() - timeValues.year);
+    //   break;
     default:
       console.error(
         `err: default time period, time period passed to getNewsArticlesFromTimePeriod: ${timePeriod}`

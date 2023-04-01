@@ -1,10 +1,11 @@
 export interface GeneratedQuizQuestion {
   question: string;
-  options: string[];
-  answerIndex: number;
+  choices: string[];
+  answer: number;
 }
 
 export interface QuizQuestion extends GeneratedQuizQuestion {
   source: string;
-  image: string;
+  summary: string;
+  image: string | null;
 }

@@ -1,12 +1,18 @@
+type source = {
+  id: string;
+  name: string;
+};
 export type NewsData = {
-  id: number;
+  // id: number;
   title: string;
-  text: string;
+  description: string;
   summary: string;
   url: string;
-  image: string;
-  author: string;
-  language: string;
-  source_country: string;
-  sentiment: number;
+  urlToImage: string | null;
+  content: string;
+  // image: string;
+  // author: string;
+  // language: string;
+  // source_country: string;
+  // sentiment: number;
 };

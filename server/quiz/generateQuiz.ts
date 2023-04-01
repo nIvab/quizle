@@ -38,14 +38,14 @@ export const generateQuizQuestions = async (
     const quizQuestions: (QuizQuestion | null)[] = await Promise.all(
       newsArticles.map(async (article) => {
         const gptResponse: GeneratedQuizQuestion | null =
-          await getGPTChatResponse(article.text);
+          await getGPTChatResponse(article.content);
         if (gptResponse?.question) {
           const quizQuestion: QuizQuestion = {
             ...gptResponse,
             source: article.url,
-            image: article.image,
+            image: article.urlToImage,
+            summary: article.description,
           };
-          console.log("got quiz questions");
           return quizQuestion;
         } else {
           return null;
