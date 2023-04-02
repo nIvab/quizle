@@ -4,3 +4,8 @@
 .env*
 .vscode
 **/.vscode
+/dist/
+/dist/**
+/tmp/
+/tmp/**
+ 
