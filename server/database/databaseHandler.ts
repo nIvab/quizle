@@ -87,9 +87,10 @@ export const readLatestQuizFromDb = async (
   const { client, db } = await getMongoObjs();
   try {
     const collection: Collection = db.collection(`quizzes-${timePeriod}`);
-    const response = await collection.findOne();
+    const response = await collection.findOne({}, { sort: { $natural: -1 } });
     if (response) {
       const quiz = response.quiz;
+      // console.log(quiz);
       client.close();
       return quiz;
     }
