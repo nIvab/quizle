@@ -1,12 +1,10 @@
 // import cron from "node-cron";
-import fs from "fs/promises";
-import path from "path";
+
 import { getNewsArticlesFromTimePeriod } from "./newsHandler";
 import { getGPTChatResponse } from "./gptHandler";
-import { GeneratedQuizQuestion, QuizQuestion } from "../../types/QuizQuestion";
 import { writeQuizToMongo } from "../database/databaseHandler";
+import { GeneratedQuizQuestion, QuizQuestion } from "../../types/QuizQuestion";
 import { NewsData } from "../../types/NewsData";
-
 export const setupQuiz = async (timePeriod: string): Promise<void> => {
   /**
    * will generate a quiz, filter out all null values save the quiz to the mongoDB database

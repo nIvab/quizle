@@ -1,18 +1,11 @@
-import { GeneratedQuizQuestion, QuizQuestion } from "../../types/QuizQuestion";
-import mongoose, {
-  Collection,
-  Db,
-  MongoClient,
-  ServerApiVersion,
-  Document,
-} from "mongodb";
+import { QuizQuestion } from "../../types/QuizQuestion";
+import { Collection, Db, MongoClient, Document } from "mongodb";
 import { getDateFromTimePeriod } from "../quiz/timeValues";
-import { time } from "console";
 type MongoObjs = {
   client: MongoClient;
   db: Db;
 };
-const db_name: string = "quizle-quizzes";
+const db_name = "quizle-quizzes";
 
 const getMongoObjs = async (): Promise<MongoObjs> => {
   /**

@@ -3,14 +3,14 @@ import { getDateFromTimePeriod } from "./timeValues";
 import { NewsData } from "../../types/NewsData";
 
 export const getNewsArticlesFromTimePeriod = async (
-  timePeriod: string = ""
+  timePeriod = ""
 ): Promise<NewsData[] | null> => {
   const acceptableInput: string[] = ["day", "week", "month", "year"];
   if (acceptableInput.includes(timePeriod) === false) {
     return null;
   }
   const isoDate: string = getDateFromTimePeriod(timePeriod)!.toISOString();
-  let response: NewsAPIResponse | null = await fetchData(isoDate);
+  const response: NewsAPIResponse | null = await fetchData(isoDate);
   if (response && response["articles"]) {
     const data = response["articles"] as NewsData[];
     return data;

@@ -1,8 +1,5 @@
 import { timeValues } from "../quiz/timeValues";
-import {
-  getDatabaseTimePeriodCount,
-  writeQuizToMongo,
-} from "./databaseHandler";
+import { getDatabaseTimePeriodCount } from "./databaseHandler";
 import { setupQuiz } from "../quiz/generateQuiz";
 
 export const runCheck = async () => {
@@ -10,7 +7,7 @@ export const runCheck = async () => {
    * checks to see if records have been saved to the mongodb suitably for
    */
   console.log("run check called");
-  Object.entries(timeValues).forEach(async ([key, value]) => {
+  Object.entries(timeValues).forEach(async ([key]) => {
     const count: number | null = await getDatabaseTimePeriodCount(`${key}`);
     console.log(`just checkiing, count: ${count}, bools: ${count === 0}`);
     if (count === 0) {

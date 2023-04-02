@@ -1,4 +1,4 @@
-import { QuizQuestion } from "../../../../types/QuizQuestion";
+import { QuizQuestion } from "../../../types/QuizQuestion";
 
 export const mapIntToAlphabet = (num: number) => {
   return String.fromCharCode(97 + num).toLocaleUpperCase();

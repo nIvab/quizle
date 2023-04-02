@@ -1,18 +1,19 @@
 import {
   $,
   QRL,
-  Resource,
   component$,
   useSignal,
   useStore,
   useTask$,
 } from "@builder.io/qwik";
 import { routeLoader$, useNavigate } from "@builder.io/qwik-city";
-import { readLatestQuizFromDb } from "../../../../server/database/databaseHandler";
-import { QuizQuestion } from "../../../../types/QuizQuestion";
+// import { readLatestQuizFromDb } from "../../../../server/database/databaseHandler";
+
+import { QuizQuestion } from "../../../types/QuizQuestion";
 import { QuizQuestionComponent } from "~/components/styled/QuizQuestionComponent/QuizQuestionComponent";
 import { Modal } from "~/components/styled/Modal";
 import Button from "~/components/styled/buttons/Button";
+import { readLatestQuizFromDb } from "~/backend/database/databaseHandler";
 
 interface QuizRoute {
   quiz: QuizQuestion[];

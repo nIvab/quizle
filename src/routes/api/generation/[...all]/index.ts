@@ -1,6 +1,5 @@
 import { RequestHandler } from "@builder.io/qwik-city";
-
-import { runCheck } from "../../../../../server/database/runCheck";
+import { runCheck } from "~/backend/database/runCheck";
 
 // Called with every HTTP request (regardless of method)
 export const onRequest: RequestHandler = async (event) => {
