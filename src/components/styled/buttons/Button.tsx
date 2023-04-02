@@ -1,6 +1,7 @@
 import {
   QRL,
   QwikMouseEvent,
+  Signal,
   Slot,
   component$,
   useSignal,
@@ -17,7 +18,7 @@ export default component$((props: ButtonProps) => {
   /**
    * Styled button to keep everything consisten through the app
    */
-  const colors = useSignal<string>(
+  const colors: Signal<string> = useSignal<string>(
     "bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-r hover:from-indigo-500 hover:to-blue-500 "
   );
   useTask$(({ track }) => {
