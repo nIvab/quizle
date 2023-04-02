@@ -1,7 +1,6 @@
 import { $, QRL, component$, useSignal } from "@builder.io/qwik";
 import { QuizQuestion } from "../../../../types/QuizQuestion";
 import { AnswerComponent } from "../AnswerComponent/AnswerComponent";
-import { useServerTimeLoader } from "~/routes/layout";
 import {
   checkAndTrimString,
   constructQuestionTextClipboard,

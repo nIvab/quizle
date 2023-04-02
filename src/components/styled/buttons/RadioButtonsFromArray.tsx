@@ -39,7 +39,7 @@ const RadioButton: Component<RadioButtonProps> = component$(
     /*
      * Component to create button that mimics how a radio checkobox behavies but styled
      */
-    let style: string =
+    let style =
       "p-3 px-5 rounded-2xl font-bold text-stone-300 transition ease-in-out delay-80 hover:-translate-y-1 hover:scale-110";
     props.isActive
       ? (style +=

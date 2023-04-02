@@ -1,4 +1,3 @@
-import { QuizQuestion } from "../../../../types/QuizQuestion";
 import { mapIntToAlphabet } from "../QuizQuestionComponent/utility";
 
 export const constructAnswerTextClipboard = (

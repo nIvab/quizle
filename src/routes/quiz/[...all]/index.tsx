@@ -28,7 +28,6 @@ export const getQuiz = routeLoader$(
         timePeriod
       );
       if (quiz) {
-        console.log(quiz);
         const quizPage: QuizRoute = { quiz: quiz, timePeriod: timePeriod };
         return quizPage;
       }
@@ -47,11 +46,6 @@ export default component$(() => {
       if (quizResults.value.length >= 10) {
         showResults.value = true;
       }
-      console.log(
-        `hit! ${isRight}, ${quizResults.value}, ${
-          quizResults.value.length >= 10
-        }  `
-      );
     }
   );
 
@@ -74,14 +68,6 @@ export default component$(() => {
               </div>
             );
           })}
-        <Resource
-          value={quizQuestions}
-          onPending={() => <div>...loading</div>}
-          onRejected={() => <div>unable to load data</div>}
-          onResolved={(quizQuestions) => {
-            return <></>;
-          }}
-        ></Resource>
       </div>
       <div>
         {showResults.value && (

@@ -15,7 +15,7 @@ export default component$(() => {
   });
 
   const onClickNav = $(() => {
-    let url = `/quiz/?timeperiod=${activeTimeValue.value.toLocaleLowerCase()}`;
+    const url = `/quiz/?timeperiod=${activeTimeValue.value.toLocaleLowerCase()}`;
     nav(url);
   });
 
@@ -27,15 +27,17 @@ export default component$(() => {
       </div>
       <div class="mt-12">
         <p>
-          Each day this site will generate a quiz from the time period set below
-          by feeding Australian news articles into OpenAI's GPT large language
-          model.
+          Quizle is a site that automatically generates quizes from the latest
+          news articles in Australia!
         </p>
         <p>
-          At the end of the day (ACDT 00:00) the questions will be reset and
-          regenerated.
+          At the end of the week, or month a new quiz will be generated for you
+          to complete.
         </p>
-        <p class="mt-1">Use the options below to set the timescale desired.</p>
+        <p class="mt-1">
+          Use the options below to set the time period for which a quiz will
+          serve you questions from.
+        </p>
         <div>
           <div class="mt-5">
             <h4 class="text-center font-semibold text-xl mb-3">

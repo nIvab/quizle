@@ -1,7 +1,7 @@
 import { Signal, component$ } from "@builder.io/qwik";
 
 type SelectFromObjectProps = {
-  object: Object;
+  object: object;
   objectSignal: Signal<string>;
 };
 
@@ -19,8 +19,8 @@ export const SelectFromObject = component$((props: SelectFromObjectProps) => {
         }}
       >
         {Object.keys(props.object).map((k) => {
-          let key: ObjectKey = k as ObjectKey;
-          let value = props.object[key];
+          const key: ObjectKey = k as ObjectKey;
+          const value = props.object[key];
           return (
             <option value={`${value}`} class="" key={`${value}`}>
               {key}

@@ -1,6 +1,5 @@
 import {
   QRL,
-  QwikMouseEvent,
   Signal,
   Slot,
   component$,

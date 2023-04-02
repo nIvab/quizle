@@ -1,8 +1,7 @@
 import { component$ } from "@builder.io/qwik";
-import { link } from "fs";
 
 export default component$(() => {
-  const linkStyle: string =
+  const linkStyle =
     "transition italic ease-in-out delay-70 underline hover:font-bold hover:text-neutral-200";
   return (
     <footer class="rounded-b-lg">
