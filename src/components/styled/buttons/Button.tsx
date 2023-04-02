@@ -4,6 +4,7 @@ import {
   Slot,
   component$,
   useSignal,
+  useTask$,
 } from "@builder.io/qwik";
 
 interface ButtonProps {
@@ -19,10 +20,15 @@ export default component$((props: ButtonProps) => {
   const colors = useSignal<string>(
     "bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-r hover:from-indigo-500 hover:to-blue-500 "
   );
-  if (props.theme === "warm") {
-    colors.value =
-      "bg-gradient-to-r from-red-500 to-rose-600 hover:bg-gradient-to-r hover:from-orange-500  hover:to-red-500 ";
-  }
+  useTask$(({ track }) => {
+    track(() => {
+      colors;
+    });
+    if (props.theme === "warm") {
+      colors.value =
+        "bg-gradient-to-r from-red-500 to-rose-600 hover:bg-gradient-to-r hover:from-orange-500  hover:to-red-500 ";
+    }
+  });
   return (
     <button
       class={
