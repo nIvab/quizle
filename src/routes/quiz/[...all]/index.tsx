@@ -2,18 +2,16 @@ import {
   $,
   QRL,
   Resource,
-  Signal,
   component$,
   useSignal,
   useStore,
   useTask$,
 } from "@builder.io/qwik";
-import { routeLoader$, useLocation, useNavigate } from "@builder.io/qwik-city";
+import { routeLoader$, useNavigate } from "@builder.io/qwik-city";
 import { readLatestQuizFromDb } from "../../../../server/database/databaseHandler";
 import { QuizQuestion } from "../../../../types/QuizQuestion";
 import { QuizQuestionComponent } from "~/components/styled/QuizQuestionComponent/QuizQuestionComponent";
 import { Modal } from "~/components/styled/Modal";
-import { getCustomGPTChatResponse } from "../../../../server/quiz/gptHandler";
 import Button from "~/components/styled/buttons/Button";
 
 interface QuizRoute {
@@ -113,7 +111,7 @@ const ResultsComponent = component$((props: ResultsComponentProps) => {
     /**
      * to take us back to the home menu
      */
-    let url = `/`;
+    const url = `/`;
     nav(url);
   });
 
