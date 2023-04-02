@@ -30,6 +30,7 @@ export const getQuiz = routeLoader$(
         timePeriod
       );
       if (quiz) {
+        console.log(quiz);
         const quizPage: QuizRoute = { quiz: quiz, timePeriod: timePeriod };
         return quizPage;
       }
