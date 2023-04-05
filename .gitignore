@@ -10,7 +10,5 @@
 /tmp/**
 /server/build/ 
 /server/build/**
-/adapters/
-/adapters/**
 /.vercel/
 /server/**
