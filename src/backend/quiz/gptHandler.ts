@@ -2,7 +2,7 @@ import { Configuration, OpenAIApi } from "openai";
 import { GeneratedQuizQuestion } from "../../types/QuizQuestion";
 
 const configuration: Configuration = new Configuration({
-  apiKey: import.meta.env.VITE_OPENAI_API_KEY,
+  apiKey: process.env.VITE_OPENAI_API_KEY,
 });
 
 export const getGPTChatResponse = async (

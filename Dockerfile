@@ -15,6 +15,9 @@ RUN npm ci
 # Copy the source code into the build image
 COPY ./ ./
 
+RUN npm run qwik add express
+
+
 # Build the project
 RUN npm run build
 

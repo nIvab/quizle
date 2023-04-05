@@ -12,6 +12,8 @@ const getMongoObjs = async (): Promise<MongoObjs> => {
    * Connects to the mongodb server and gets the appropriate database
    */
   const uri: string = import.meta.env.VITE_MONGO_CONNECTION_URI as string;
+  console.log(import.meta.env)
+  console.log(`\n \n \n process \n \n `, process.env)
   const client: MongoClient = new MongoClient(uri);
   // Connect to the MongoDB database
   await client.connect();

@@ -32,7 +32,7 @@ const fetchData = async (time: string): Promise<NewsAPIResponse | null> => {
   //   params: {
   //     "source-countries": "au",
   //     number: 10,
-  //     "api-key": import.meta.env.VITE_NEWS_API_KEY,
+  //     "api-key": process.env.VITE_NEWS_API_KEY,
   //     "earliest-publish-date": time,
   //     "latest-publish-date": dateNowISO,
   //   },
@@ -43,7 +43,7 @@ const fetchData = async (time: string): Promise<NewsAPIResponse | null> => {
     params: {
       "source-countries": "au",
       number: 10,
-      apiKey: import.meta.env.VITE_NEWS_API_KEY,
+      apiKey: process.env.VITE_NEWS_API_KEY,
       from: time,
       to: dateNowISO,
       sortBy: "popularity",

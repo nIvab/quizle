@@ -5,7 +5,7 @@ import { runCheck } from "~/backend/database/runCheck";
 export const onRequest: RequestHandler = async (event) => {
   // localhost:5173/api/generation/?apiKey=...
 
-  const key = import.meta.env.VITE_ENDPOINT_KEY as string; // very scuffed authentication but does what we need
+  const key = process.env.VITE_ENDPOINT_KEY as string; // very scuffed authentication but does what we need
   const params: URLSearchParams = event.query;
   if (params.get("apiKey") == key) {
     runCheck();
