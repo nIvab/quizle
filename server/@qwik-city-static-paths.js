@@ -1,4 +1,4 @@
-const staticPaths = new Set([]);
+const staticPaths = new Set(["/favicon.ico:Zone.Identifier","/favicon.svg","/logo.svg","/manifest.json","/q-manifest.json","/robots.txt","/service-worker.js","/square-github.svg"]);
 function isStaticPath(method, url) {
   if (method.toUpperCase() !== 'GET') {
     return false;

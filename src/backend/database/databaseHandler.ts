@@ -5,7 +5,7 @@ type MongoObjs = {
   client: MongoClient;
   db: Db;
 };
-const db_name = "quizle-quizzes";
+const db_name = "quizle-quizes";
 
 const getMongoObjs = async (): Promise<MongoObjs> => {
   /**
