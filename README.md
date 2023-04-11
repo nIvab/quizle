@@ -3,7 +3,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
+  <a href="https://github.com/nivab/quizle">
     <img src="public/logo.svg" alt="Logo" width="" height="100">
   </a>
 
@@ -53,12 +53,7 @@
 
 ## About The Project
 
-Each day this site will generate a quiz from the time period set below
-by feeding Australian news articles into OpenAI's GPT large language
-model.
-
-At the end of the day (ACDT 00:00) the questions will be reset and
-regenerated.
+Quizle is a site that automates the generation of weekly news quizzes (à la the [abc news quiz](https://www.abc.net.au/news/quizzes) or similar).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -80,27 +75,31 @@ To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
+- Take a read through some of the documentation in `/docs`, this contains design and architecture decisions, notes on deployment and the README from the standard Qwik template
 - Node: v16.8 or higher
 - API keys for World-News and OpenAI API's if you wish to generate quizzes instead of fetching them from some other source(coming soon`)
   - [OpenAI API](https://openai.com/blog/openai-api)
   - [World-News API](https://worldnewsapi.com/)
+- Access to a mongodb instance and its connection URI
 
 ### Installation
 
 1. Clone the repo
    ```sh
-   git clone git@github.com:nIvab/ausquiz.git
+   git clone git@github.com:nIvab/quizle.git
    ```
 2. Install NPM packages
    ```sh
-   cd ausquiz
+   cd quizle
    npm install
    ```
 3. Create a `.env` file within the root of the cloned repository and enter your API keys in `.env`
 
    ```bash
-   NEWS_API_KEY = "ENTER YOUR API KEY"
-   OPENAI_API_KEY = "ENTER YOUR API KEY"
+    VITE_NEWS_API_KEY="API key for NewAPI"
+    VITE_OPENAI_API_KEY="API key for openAI API"
+    VITE_MONGO_CONNECTION_URI="Connection URI for MongoDB instance"
+    VITE_ENDPOINT_KEY="Secret key for quiz generation"
    ```
 
 4. To run a development server
@@ -126,10 +125,13 @@ If you have a suggestion that would make this better, please fork the repo and c
 Don't forget to give the project a star! Thanks again!
 
 1. Clone the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+2. Inspect the [issues](https://github.com/nIvab/quizle/issues) and pick one to work on/open one
+3. Create your Feature Branch by clicking "Create a branch" when viewing the particular issue page
+4. Fetch your newly created branch (`git fetch origin`)
+5. Checkout your branch (`git checkout <issue number>-issue name`)
+6. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+7. Push to the Branch (`git push origin feature/AmazingFeature`)
+8. Open a Pull Request
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -182,13 +184,3 @@ Use this space to list resources you find helpful and would like to give credit 
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/othneildrew
 [product-screenshot]: images/screenshot.png
-
-## Express Server
-
-This app has a minimal [Express server](https://expressjs.com/) implementation. After running a full build, you can preview the build using the command:
-
-```
-npm run serve
-```
-
-Then visit [http://localhost:8080/](http://localhost:8080/)

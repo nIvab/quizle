@@ -8,8 +8,11 @@ export const runCheck = async () => {
    */
   console.log("run check called");
   Object.entries(timeValues).forEach(async ([key]) => {
+    // loop through each of the time values and if acceptable then generate quiz for that time value
+
     const count: number | null = await getDatabaseTimePeriodCount(`${key}`);
     console.log(`just checkiing, count: ${count}, bools: ${count === 0}`);
+
     if (count === 0) {
       console.log(`ok setting up quiz for key: ${key}`);
       setupQuiz(`${key}`);
